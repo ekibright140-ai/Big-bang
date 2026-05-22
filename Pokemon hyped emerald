@@ -1,0 +1,186 @@
+Step 2 — Project Structure
+Your GitHub project should look like this:
+Plain text
+hyper-emerald-remastered/
+│
+├── src/
+│   ├── battle/
+│   ├── pokemon/
+│   ├── terastal/
+│   ├── mega/
+│   ├── dexnav/
+│   ├── following/
+│   ├── nuzlocke/
+│   ├── randomizer/
+│   ├── quests/
+│   └── difficulty/
+│
+├── graphics/
+│   ├── pokemon/
+│   ├── backgrounds/
+│   ├── icons/
+│   └── terastal/
+│
+├── data/
+│   ├── pokemon/
+│   ├── moves/
+│   ├── items/
+│   └── trainers/
+│
+├── maps/
+├── sound/
+└── include/
+Step 3 — Example Feature Code
+Infinite TM System
+C
+// src/items/tm_case.c
+
+bool8 CanTeachTM(u16 move, u16 species)
+{
+    return TRUE;
+}
+
+void RemoveTMAfterUse(u16 itemId)
+{
+    // Disabled for infinite TM use
+}
+Faster Text Engine
+C
+// src/text/text_speed.c
+
+u8 GetTextSpeed(void)
+{
+    return 0; // Instant text
+}
+Auto Run
+C
+// src/overworld/player_movement.c
+
+bool8 IsRunningAllowed(void)
+{
+    return TRUE;
+}
+Improved EXP Share
+C
+// src/battle/exp_share.c
+
+#define EXP_SHARE_ALL TRUE
+
+static u32 CalculatePartyExp(u32 baseExp)
+{
+    return baseExp;
+}
+Day/Night System
+C
+// src/clock/daynight.c
+
+enum
+{
+    TIME_MORNING,
+    TIME_DAY,
+    TIME_NIGHT,
+};
+
+u8 GetCurrentTimeOfDay(void)
+{
+    RTC_Time time;
+    RtcCalcLocalTime();
+
+    if (gLocalTime.hours < 6)
+        return TIME_NIGHT;
+    else if (gLocalTime.hours < 18)
+        return TIME_DAY;
+
+    return TIME_NIGHT;
+}
+Following Pokémon Skeleton
+C
+// src/following/following_mon.c
+
+void CreateFollowingMonSprite(void)
+{
+    u16 species = GetFirstAliveMon();
+
+    CreateMonSprite(species);
+}
+Difficulty Modes
+C
+// include/difficulty.h
+
+enum DifficultyMode
+{
+    DIFFICULTY_NORMAL,
+    DIFFICULTY_HARD,
+    DIFFICULTY_INSANE
+};
+Randomizer Mode
+C
+// src/randomizer/randomizer.c
+
+u16 GetRandomSpecies(void)
+{
+    return Random() % NUM_SPECIES;
+}
+Nuzlocke Mode
+C
+// src/nuzlocke/nuzlocke.c
+
+bool8 IsPokemonDead(struct Pokemon *mon)
+{
+    return GetMonData(mon, MON_DATA_HP) == 0;
+}
+Terastallization Framework
+C
+// src/battle/terastal.c
+
+void ActivateTerastalization(u8 battler)
+{
+    gBattleMons[battler].teraActive = TRUE;
+}
+Mega Evolution Example
+C
+// src/battle/mega.c
+
+bool8 CanMegaEvolve(u8 battler)
+{
+    return TRUE;
+}
+DexNav Framework
+C
+// src/dexnav/dexnav.c
+
+void StartDexNavSearch(u16 species)
+{
+    ShowSpeciesLocation(species);
+}
+Modern Move Relearner
+C
+// src/move_relearner.c
+
+void OpenMoveReminderMenu(void)
+{
+    ShowMoveListForFree();
+}
+Battle Frontier Upgrade Hook
+C
+// src/battle_frontier/frontier.c
+
+#define FRONTIER_LEVEL_CAP 100
+#define FRONTIER_AI_ADVANCED TRUE
+Weather Visual System
+C
+// src/weather/weather_visuals.c
+
+void LoadDynamicWeatherEffects(void)
+{
+    StartRainAnimation();
+}
+Step 4 — Build Instructions
+Install:
+DevKitARM
+MSYS2
+make
+Git
+Then compile with:
+Bash
+make -j4
